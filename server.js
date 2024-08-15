@@ -7,10 +7,10 @@ const app = express();
 const port = 8088;
   
 const db = mysql.createConnection({
-  host: 'sql110.infinityfree.com',
-  user: 'if0_37102802',
-  password: 'VcqDQxmbtxxYO',
-  database: 'if0_37102802_db_receptionist'
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'db_receptionist'
 });
   
 db.connect(err => {
