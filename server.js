@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const cors = require('cors');
   
 const app = express();
-const port = 8088;
+const port = 3000;
   
 const db = mysql.createConnection({
   host: 'mysql.railway.internal',
