@@ -7,10 +7,10 @@ const app = express();
 const port = 3000;
   
 const db = mysql.createConnection({
-  host: 'mysql.railway.internal',
-  user: 'root',
-  password: 'EmCOQZGNLEceYtUwLPTYpOofLruzpqUK',
-  database: 'railway'
+  host: process.env.DB_HOS,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DATABASE
 });
   
 db.connect(err => {
