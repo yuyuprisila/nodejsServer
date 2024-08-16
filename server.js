@@ -6,6 +6,11 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 8088;
 
+console.log(DB_HOST);
+console.log(DB_USERNAME);
+console.log(DB_PASSWORD);
+console.log(DATABASE);
+
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USERNAME,
