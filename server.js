@@ -38,6 +38,19 @@ app.get('/posts', (req, res) => {
   });
 });
 
+app.get('/posts/userAccount', (req, res) => {
+  db.query('SELECT * FROM employee', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching posts');
+      return;
+    }
+    console.log('berhasil login');
+    
+
+    res.json(results);
+  });
+});
+
 app.post('/posts/create', (req, res) => {
   const { reservation_date, id_employee, keterangan, jmlh_tamu, lokasi, ruangan, tujuan, jenis_tamu, nama_prshn } = req.body;
 
@@ -180,8 +193,13 @@ app.put('/posts/:id', (req, res) => {
     });
   });
 });
-  
-  
+
+// app.put('/posts/:id', (req, res) => {
+//   const postId = req.params.id;
+//   const { status } = req.body;
+
+// });
+
 app.delete('/posts/:id', (req, res) => {
   const postId = req.params.id;
 
@@ -230,7 +248,6 @@ app.delete('/posts/:id', (req, res) => {
                 res.status(500).send('Error committing transaction');
               });
             }
-
             res.status(200).json({ msg: 'Post and guest deleted successfully' });
           });
         });
@@ -241,7 +258,7 @@ app.delete('/posts/:id', (req, res) => {
 
 app.post('/posts/akun', (req, res) => {
   const { username, password } = req.body;
-
+  console.log(req.body);
   const query = 'SELECT * FROM employee WHERE userID = ? AND password = ?';
   db.query(query, [username, password], (err, results) => {
     if (err) {
@@ -256,6 +273,40 @@ app.post('/posts/akun', (req, res) => {
       res.status(401).json({ message: 'Invalid credentials' });
     }
   });
+});
+
+let roomData = null;
+app.post('/posts/panggilan', (req, res) => {
+  const { roomId, tujuan, lokasi, ruangan } = req.body;
+  
+  if (!roomId || !tujuan || !lokasi || !ruangan) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+  // app.get('/posts/panggilan', (req, res) => {
+  //   if (roomData) {
+  //     res.status(200).json(roomData);
+  //   } else {
+  //     res.status(404).json({ message: 'No data found' });
+  //   }
+  // });
+  roomData = {
+    roomId: roomId,
+    details: {
+      tujuan: tujuan,
+      lokasi: lokasi,
+      ruangan: ruangan
+    }
+  };
+  res.status(200).json(roomData);
+  console.log(req.body);
+});
+
+app.get('/posts/getpanggilan', (req, res) => {
+  if (roomData) {
+    res.status(200).json(roomData);
+  } else {
+    res.status(404).json({ message: 'No data found' });
+  }
 });
 
 app.listen(port, () => {
