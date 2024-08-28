@@ -207,8 +207,8 @@ app.post('/posts/create', (req, res) => {
     }
 
     const insertTamuQuery = `
-      INSERT INTO tamu (id_tamu, tujuan, jenis_tamu, nama_prshn)
-      VALUES (30,?, ?, ?)`;
+      INSERT INTO tamu (tujuan, jenis_tamu, nama_prshn)
+      VALUES (?, ?, ?)`;
 
     const insertTamuValues = [tujuan, jenis_tamu, nama_prshn];
 
