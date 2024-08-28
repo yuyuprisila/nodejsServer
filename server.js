@@ -28,6 +28,75 @@ db.connect(err => {
 app.use(bodyParser.json());
 app.use(cors());
   
+
+// Tambahkan di bagian atas file bersama dengan require lainnya
+const fs = require('fs');
+
+// Tambahkan route untuk membuat tabel baru
+app.post('/create-new-table', (req, res) => {
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS reservasi (
+      id_reservasi INT(20) AUTO_INCREMENT PRIMARY KEY,
+      id_tamu INT(20) NULL,
+      id_employee INT(20) NULL,
+      created_at TIMESTAMP NULL,
+      update_at TIMESTAMP NULL,
+      reservation_date DATE NULL,
+      tgl_datang DATETIME NULL,
+      tgl_pulang DATETIME NULL,
+      keterangan VARCHAR(255) NOT NULL,
+      jmlh_tamu INT(20) NOT NULL,
+      lokasi VARCHAR(50) NOT NULL,
+      ruangan VARCHAR(20) NOT NULL,
+      status VARCHAR(20) NULL,
+    )
+  `;
+  db.query(createTableQuery, (err, results) => {
+    if (err) {
+      console.error('Error creating table:', err);
+      return res.status(500).send('Error creating table');
+    }
+    res.status(200).send('Table created successfully');
+  });
+
+  const createTableQuery2 = `
+    CREATE TABLE IF NOT EXISTS employee (
+      id_employee INT(20) AUTO_INCREMENT PRIMARY KEY,
+      userID VARCHAR(20) NOT NULL,
+      nama VARCHAR(25) NOT NULL,
+      divisi VARCHAR(20) NOT NULL,
+      password VARCHAR(20) NOT NULL,
+    )
+  `;
+  db.query(createTableQuery2, (err, results) => {
+    if (err) {
+      console.error('Error creating table:', err);
+      return res.status(500).send('Error creating table');
+    }
+    res.status(200).send('Table created successfully');
+  });
+
+  const createTableQuery3 = `
+    CREATE TABLE IF NOT EXISTS tamu (
+      id_tamu INT(20) AUTO_INCREMENT PRIMARY KEY,
+      id_dataTamu INT(20) NULL,
+      jenis_tamu VARCHAR(20) NULL,
+      tujuan VARCHAR(50) NULL,
+      nama_prshn VARCHAR(50) NULL,
+    )
+  `;
+  db.query(createTableQuery3, (err, results) => {
+    if (err) {
+      console.error('Error creating table:', err);
+      return res.status(500).send('Error creating table');
+    }
+    res.status(200).send('Table created successfully');
+  });
+});
+
+
+
+
 app.get('/posts', (req, res) => {
   db.query('SELECT reservasi.*, tamu.tujuan, tamu.jenis_tamu, tamu.nama_prshn, employee.nama, employee.divisi FROM reservasi JOIN tamu ON reservasi.id_tamu = tamu.id_tamu JOIN employee ON reservasi.id_employee = employee.id_employee ORDER BY reservasi.create_at DESC', (err, results) => {
     if (err) {
