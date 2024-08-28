@@ -209,7 +209,7 @@ app.post('/posts/create', (req, res) => {
     const insertTamuQuery = `
       INSERT INTO tamu (tujuan, jenis_tamu, nama_prshn)
       VALUES (?, ?, ?)`;
-
+    console.log(insertTamuQuery);
     const insertTamuValues = [tujuan, jenis_tamu, nama_prshn];
 
     db.query(insertTamuQuery, insertTamuValues, (err, result) => {
