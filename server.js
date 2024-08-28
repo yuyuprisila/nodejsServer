@@ -225,7 +225,7 @@ app.post('/posts/create', (req, res) => {
       //ubah id_tamu jadi ?
       const insertReservasiQuery = `
         INSERT INTO reservasi (id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan, status, created_at, update_at)
-        VALUES (10, ?, ?, ?, ?, ?, ?, 'WAITING', NOW(), NOW())`;
+        VALUES (?, ?, ?, ?, ?, ?, ?, 'WAITING', NOW(), NOW())`;
 
       const insertReservasiValues = [id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan];
 
