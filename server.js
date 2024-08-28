@@ -110,7 +110,6 @@ app.delete('/delete-table', (req, res) => {
   });
 });
 
-
 app.get('/posts', (req, res) => {
   db.query('SELECT reservasi.*, tamu.tujuan, tamu.jenis_tamu, tamu.nama_prshn, employee.nama, employee.divisi FROM reservasi JOIN tamu ON reservasi.id_tamu = tamu.id_tamu JOIN employee ON reservasi.id_employee = employee.id_employee ORDER BY reservasi.create_at DESC', (err, results) => {
     if (err) {
@@ -161,10 +160,10 @@ app.post('/posts/create', (req, res) => {
       const id_tamu = result.insertId;
 
       const insertReservasiQuery = `
-        INSERT INTO reservasi (id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan, status, update_at, created_at)
-        VALUES (?,?, ?, ?, ?, ?, ?, 'WAITING', NOW(), NOW())`;
+        INSERT INTO reservasi (id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan, status, update_at, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, 'WAITING', NOW(), NOW())`;
 
-      const insertReservasiValues = [id_tamu, id_employee,reservation_date, keterangan, jmlh_tamu, lokasi, ruangan];
+      const insertReservasiValues = [id_employee,reservation_date, keterangan, jmlh_tamu, lokasi, ruangan];
 
       db.query(insertReservasiQuery, insertReservasiValues, (err, result) => {
         if (err) {
@@ -197,69 +196,6 @@ app.post('/posts/create', (req, res) => {
     });
   });
 });
-
-// app.post('/posts/create', (req, res) => {
-//   const { reservation_date, id_employee, keterangan, jmlh_tamu, lokasi, ruangan, tujuan, jenis_tamu, nama_prshn } = req.body;
-
-//   db.beginTransaction(err => {
-//     if (err) {
-//       console.error('Error starting transaction:', err);
-//       return res.status(500).send('Error starting transaction');
-//     }
-//     const insertTamuQuery = `
-//       INSERT INTO tamu (tujuan, jenis_tamu, nama_prshn)
-//       VALUES (?, ?, ?)`;
-//     console.log(insertTamuQuery);
-//     const insertTamuValues = [tujuan, jenis_tamu, nama_prshn];
-
-//     db.query(insertTamuQuery, insertTamuValues, (err, result) => {
-//       if (err) {
-//         return db.rollback(() => {
-//           console.error('Error inserting tamu:', err);
-//           res.status(500).send('Error inserting tamu');
-//         });
-//       }
-
-//       const id_tamu = result.insertId;
-      
-//       const insertReservasiQuery = `
-//         INSERT INTO reservasi (id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan, status, created_at, update_at)
-//         VALUES (0, ?, ?, ?, ?, ?, ?, 'WAITING', NOW(), NOW())`;
-
-//       const insertReservasiValues = [id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan];
-
-//       db.query(insertReservasiQuery, insertReservasiValues, (err, result) => {
-//         if (err) {
-//           return db.rollback(() => {
-//             console.error('Error inserting reservasi:', err);
-//             res.status(500).send('Error inserting reservasi');
-//           });
-//         }
-
-//         const id_reservasi = result.insertId;
-
-//         db.commit(err => {
-//           if (err) {
-//             return db.rollback(() => {
-//               console.error('Error committing transaction:', err);
-//               res.status(500).send('Error committing transaction');
-//             });
-//           }
-
-//           db.query('SELECT reservasi.*, tamu.* FROM reservasi JOIN tamu ON reservasi.id_tamu = tamu.id_tamu WHERE reservasi.id_reservasi = ?', [id_reservasi], (err, result) => {
-//             if (err) {
-//               console.error('Error fetching created reservation and guest:', err);
-//               res.status(500).send('Error fetching created reservation and guest');
-//               return;
-//             }
-//             res.status(201).json(result[0]);
-//           });
-//         });
-//       });
-//     });
-//   });
-// });
-
 
 app.put('/posts/:id', (req, res) => {
   const postId = req.params.id;
