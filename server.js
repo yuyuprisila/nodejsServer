@@ -63,7 +63,7 @@ app.post('/create-new-table', (req, res) => {
     `,
     `
       CREATE TABLE IF NOT EXISTS tamu (
-        id_tamu INT(20) AUTO_INCREMENT PRIMARY KEY,
+        id_tamu INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         id_dataTamu INT(20),
         jenis_tamu VARCHAR(20) NULL,
         tujuan VARCHAR(50) NULL,
