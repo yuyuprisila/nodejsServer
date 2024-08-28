@@ -94,7 +94,26 @@ app.post('/create-new-table', (req, res) => {
   });
 });
 
+app.delete('/delete-table', (req, res) => {
+  const deleteTableQuery = 'DROP TABLE reservasi';
 
+  db.query(deleteTableQuery, (err, results) => {
+    if (err) {
+      console.error('Error deleting table:', err);
+      return res.status(500).send('Error deleting table');
+    }
+    res.status(200).send('Table deleted successfully');
+  });
+  const deleteTableQuery2 = 'DROP TABLE employee';
+
+  db.query(deleteTableQuery2, (err, results) => {
+    if (err) {
+      console.error('Error deleting table:', err);
+      return res.status(500).send('Error deleting table');
+    }
+    res.status(200).send('Table deleted successfully');
+  });
+});
 
 
 app.get('/posts', (req, res) => {
