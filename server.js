@@ -206,7 +206,7 @@ app.post('/posts/create', (req, res) => {
       console.error('Error starting transaction:', err);
       return res.status(500).send('Error starting transaction');
     }
-
+    //ini id_tamu hapus, cuma sementara
     const insertTamuQuery = `
       INSERT INTO tamu (id_tamu,tujuan, jenis_tamu, nama_prshn)
       VALUES (10,?, ?, ?)`;
@@ -222,10 +222,10 @@ app.post('/posts/create', (req, res) => {
       }
 
       const id_tamu = result.insertId;
-
+      //ubah id_tamu jadi ?
       const insertReservasiQuery = `
-        INSERT INTO reservasi (id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan, status, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, 'WAITING', NOW(), NOW())`;
+        INSERT INTO reservasi (id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan, status, create_at, updated_at)
+        VALUES (10, ?, ?, ?, ?, ?, ?, 'WAITING', NOW(), NOW())`;
 
       const insertReservasiValues = [id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan];
 
