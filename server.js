@@ -197,6 +197,29 @@ app.get('/posts/userAccount', (req, res) => {
 //   });
 // });
 
+app.post('/tamu/create', (req, res) => {
+  const { tujuan, jenis_tamu, nama_prshn } = req.body;
+
+  const insertTamuQuery = `
+    INSERT INTO tamu (tujuan, jenis_tamu, nama_prshn)
+    VALUES (?, ?, ?)`;
+
+  const insertTamuValues = [tujuan, jenis_tamu, nama_prshn];
+
+  db.query(insertTamuQuery, insertTamuValues, (err, result) => {
+    if (err) {
+      console.error('Error inserting tamu:', err);
+      return res.status(500).send('Error inserting tamu');
+    }
+
+    // Mengirimkan respon dengan ID tamu yang baru saja dimasukkan
+    res.status(201).json({
+      message: 'Tamu inserted successfully',
+      id_tamu: result.insertId
+    });
+  });
+});
+
 app.post('/posts/create', (req, res) => {
   const { reservation_date, id_employee, keterangan, jmlh_tamu, lokasi, ruangan, tujuan, jenis_tamu, nama_prshn } = req.body;
 
