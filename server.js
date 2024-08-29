@@ -90,7 +90,7 @@ app.post('/create-new-table', (req, res) => {
 });
 
 app.delete('/delete-table', (req, res) => {
-  const deleteTableQuery = 'DROP TABLE reservasi';
+  const deleteTableQuery = 'DROP TABLE tamu';
 
   db.query(deleteTableQuery, (err, results) => {
     if (err) {
@@ -99,7 +99,7 @@ app.delete('/delete-table', (req, res) => {
     }
     res.status(200).send('Table deleted successfully');
   });
-  const deleteTableQuery2 = 'DROP TABLE employee';
+  const deleteTableQuery2 = 'DROP TABLE tamu2';
 
   db.query(deleteTableQuery2, (err, results) => {
     if (err) {
