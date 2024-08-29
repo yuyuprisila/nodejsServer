@@ -230,10 +230,10 @@ app.post('/posts/create', (req, res) => {
     }
 
     const insertTamuQuery = `
-      INSERT INTO tamu (tujuan, jenis_tamu, nama_prshn)
+      INSERT INTO tamu (jenis_tamu, tujuan, nama_prshn)
       VALUES (?, ?, ?)`;
 
-    const insertTamuValues = [tujuan, jenis_tamu, nama_prshn];
+    const insertTamuValues = [jenis_tamu, tujuan, nama_prshn];
 
     db.query(insertTamuQuery, insertTamuValues, (err, result) => {
       if (err) {
