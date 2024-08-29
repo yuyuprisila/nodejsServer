@@ -227,7 +227,7 @@ app.post('/posts/create', (req, res) => {
         INSERT INTO reservasi (id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan, status, created_at, update_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, 'WAITING', NOW(), NOW())`;
 
-      const insertReservasiValues = [1, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan];
+      const insertReservasiValues = [id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan];
 
       db.query(insertReservasiQuery, insertReservasiValues, (err, result) => {
         if (err) {
@@ -260,6 +260,7 @@ app.post('/posts/create', (req, res) => {
     });
   });
 });
+
 
 
 app.put('/posts/:id', (req, res) => {
