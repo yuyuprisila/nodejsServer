@@ -247,7 +247,7 @@ app.post('/posts/create', (req, res) => {
       console.log(id_tamu);
       
       const insertReservasiQuery = `
-        INSERT INTO reservasi (id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan, status, created_at, update_at)
+        INSERT INTO reservasi (id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan, status, create_at, update_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, 'WAITING', NOW(), NOW())`;
 
       const insertReservasiValues = [id_tamu, id_employee, reservation_date, keterangan, jmlh_tamu, lokasi, ruangan];
